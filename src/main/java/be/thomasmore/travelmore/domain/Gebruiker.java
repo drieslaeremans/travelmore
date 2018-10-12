@@ -7,7 +7,6 @@ import javax.persistence.*;
 @DiscriminatorValue("Gebruiker")
 
 @Entity
-@Table(name = "Gebruiker")
 
 public class Gebruiker {
 
