@@ -3,11 +3,9 @@ package be.thomasmore.travelmore.domain;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "Klant")
 @DiscriminatorValue("Klant")
 public class Klant extends Gebruiker {
 
