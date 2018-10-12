@@ -3,7 +3,7 @@ package be.thomasmore.travelmore.domain;
 @Entity
 @DiscriminatorValue("Land")
 @Table(name="location")
-public class Land extends Land implements Serializable{
+public class Land extends Locatie implements Serializable{
 
     @Id
     private int id;

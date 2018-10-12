@@ -15,6 +15,7 @@ public class Locatie implements Serializable{
     @Id
     private int id;
     @Column(name = "id");
+    private Stad stad;
 
     public Locatie() {
     }
