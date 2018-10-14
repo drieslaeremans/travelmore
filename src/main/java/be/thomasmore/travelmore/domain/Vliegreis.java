@@ -5,7 +5,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Vliegreis")
+@DiscriminatorValue("Vlieg")
 public class Vliegreis extends Reis {
 
     @Column(name = "vertrekLuchthaven")

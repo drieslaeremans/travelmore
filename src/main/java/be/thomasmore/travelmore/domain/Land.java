@@ -6,14 +6,26 @@ import java.util.List;
 
 @Entity
 @Table(name = "land")
+@NamedQueries({
+        @NamedQuery(
+                name = Land.FIND_ALL,
+                query = "select l from Land l"
+        ),
+        @NamedQuery(
+                name = Land.FIND_BY_NAAM,
+                query = "select l from Land l where l.naam = :naam"
+        )
+})
 public class Land {
+    public static final String FIND_ALL = "Land.findAll";
+    public static final String FIND_BY_NAAM = "Land.findByNaam";
 
     @Id
     private int id;
     @Column(name = "naam")
     private String naam;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "land", fetch = FetchType.EAGER)
     private List<Locatie> locaties = new ArrayList<Locatie>();
 
     public Land() {
@@ -33,5 +45,13 @@ public class Land {
 
     public void setNaam(String naam) {
         this.naam = naam;
+    }
+
+    public List<Locatie> getLocaties() {
+        return locaties;
+    }
+
+    public void setLocaties(List<Locatie> locaties) {
+        this.locaties = locaties;
     }
 }

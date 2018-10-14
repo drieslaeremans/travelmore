@@ -1,23 +1,41 @@
 package be.thomasmore.travelmore.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "REISTYPE", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("Reis")
 @Entity
+@Table(name = "reis")
 public class Reis {
 
     @Id
     private int id;
+    @Column(name = "naam")
     private String naam;
-    private Date datumVertrek;
-    private Date datumTerug;
+    @Column(name = "startDatum")
+    @Temporal(TemporalType.DATE)
+    private Date startDatum;
+    @Column(name = "eindDatum")
+    @Temporal(TemporalType.DATE)
+    private Date eindDatum;
+    @Column(name = "prijsPerPersoon")
     private double prijsPerPersoon;
+    @Column(name = "aantalPlaatsen")
     private int aantalPlaatsen;
-    private int vertrekLocatieId;
-    private int aankomstLocatieId;
+
+    @ManyToOne
+    @JoinColumn(name = "vertrekLocatieId")
+    private Locatie vertrekLocatie;
+
+    @ManyToOne
+    @JoinColumn(name = "aankomstLocatieId")
+    private Locatie aankomstLocatie;
+
+    @OneToMany(mappedBy = "reis")
+    private List<Boeking> boekings = new ArrayList<Boeking>();
 
     public Reis() {
     }
@@ -38,20 +56,20 @@ public class Reis {
         this.naam = naam;
     }
 
-    public Date getDatumVertrek() {
-        return datumVertrek;
+    public Date getStartDatum() {
+        return startDatum;
     }
 
-    public void setDatumVertrek(Date datumVertrek) {
-        this.datumVertrek = datumVertrek;
+    public void setStartDatum(Date startDatum) {
+        this.startDatum = startDatum;
     }
 
-    public Date getDatumTerug() {
-        return datumTerug;
+    public Date getEindDatum() {
+        return eindDatum;
     }
 
-    public void setDatumTerug(Date datumTerug) {
-        this.datumTerug = datumTerug;
+    public void setEindDatum(Date eindDatum) {
+        this.eindDatum = eindDatum;
     }
 
     public double getPrijsPerPersoon() {
@@ -70,20 +88,28 @@ public class Reis {
         this.aantalPlaatsen = aantalPlaatsen;
     }
 
-    public int getVertrekLocatieId() {
-        return vertrekLocatieId;
+    public Locatie getVertrekLocatie() {
+        return vertrekLocatie;
     }
 
-    public void setVertrekLocatieId(int vertrekLocatieId) {
-        this.vertrekLocatieId = vertrekLocatieId;
+    public void setVertrekLocatie(Locatie vertrekLocatie) {
+        this.vertrekLocatie = vertrekLocatie;
     }
 
-    public int getAankomstLocatieId() {
-        return aankomstLocatieId;
+    public Locatie getAankomstLocatie() {
+        return aankomstLocatie;
     }
 
-    public void setAankomstLocatieId(int aankomstLocatieId) {
-        this.aankomstLocatieId = aankomstLocatieId;
+    public void setAankomstLocatie(Locatie aankomstLocatie) {
+        this.aankomstLocatie = aankomstLocatie;
+    }
+
+    public List<Boeking> getBoekings() {
+        return boekings;
+    }
+
+    public void setBoekings(List<Boeking> boekings) {
+        this.boekings = boekings;
     }
 
     @Override

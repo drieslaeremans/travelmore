@@ -1,31 +1,37 @@
 package be.thomasmore.travelmore.domain;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @DiscriminatorValue("Klant")
 public class Klant extends Gebruiker {
 
-    private String adres;
-    private Date geboorteDatum;
+    @Column(name = "geboortedatum")
+    @Temporal(TemporalType.DATE)
+    private Date geboortedatum;
+
+    @OneToMany(mappedBy = "klant")
+    private List<Boeking> boekings = new ArrayList<Boeking>();
 
     public Klant() {
     }
 
-    public String getAdres() {
-        return adres;
+    public Date getGeboortedatum() {
+        return geboortedatum;
     }
 
-    public void setAdres(String adres) {
-        this.adres = adres;
+    public void setGeboortedatum(Date geboortedatum) {
+        this.geboortedatum = geboortedatum;
     }
 
-    public Date getGeboorteDatum() {
-        return geboorteDatum;
+    public List<Boeking> getBoekings() {
+        return boekings;
     }
 
-    public void setGeboorteDatum(Date geboorteDatum) {
-        this.geboorteDatum = geboorteDatum;
+    public void setBoekings(List<Boeking> boekings) {
+        this.boekings = boekings;
     }
 }
