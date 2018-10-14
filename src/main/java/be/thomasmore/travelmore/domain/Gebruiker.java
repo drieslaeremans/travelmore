@@ -5,18 +5,13 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (name = "GEBRUIKERTYPE", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("Gebruiker")
-
 @Entity
-
 public class Gebruiker {
 
     @Id
     private int id;
-    @Column(name = "naam")
     private String naam;
-    @Column(name = "email")
     private String email;
-    @Column(name = "wachtwoord")
     private String wachtwoord;
 
     public Gebruiker() {

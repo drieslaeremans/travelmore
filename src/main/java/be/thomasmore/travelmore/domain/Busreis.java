@@ -8,11 +8,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("Busreis")
 public class Busreis extends Reis {
 
-    @Column(name = "aantalKilometer")
     private int aantalKilometer;
-    @Column(name = "vertrekAdres")
     private String vertrekAdres;
-    @Column(name = "aankomstAdres")
     private String aankomstAdres;
 
     public Busreis() {

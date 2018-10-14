@@ -1,20 +1,29 @@
 package be.thomasmore.travelmore.domain;
 
+import javax.persistence.*;
+
 @Entity
-@Table(name="location")
-@NamedQuerries(
+@Table(name = "locatie")
+@NamedQueries(
         {
                 @NamedQuery(
-                        name = Location.FIND_ALL,
-                        query = "SELECT l FROM Location l"
+                        name = Locatie.FIND_ALL,
+                        query = "SELECT l FROM Locatie l"
                 )
         }
 )
-public class Locatie implements Serializable{
+public class Locatie {
+    public static final String FIND_ALL = "Locatie.findAll";
 
     @Id
     private int id;
-    @Column(name = "id");
+
+    @Column(name = "stadnaam")
+    private int stadnaam;
+
+    @ManyToOne
+    @JoinColumn(name = "landId")
+    private Land land;
 
     public Locatie() {
     }
@@ -27,19 +36,19 @@ public class Locatie implements Serializable{
         this.id = id;
     }
 
-    public int getLandId() {
-        return landId;
+    public int getStadnaam() {
+        return stadnaam;
     }
 
-    public void setLandId(int landId) {
-        this.landId = landId;
+    public void setStadnaam(int stadnaam) {
+        this.stadnaam = stadnaam;
     }
 
-    public int getStadId() {
-        return stadId;
+    public Land getLand() {
+        return land;
     }
 
-    public void setStadId(int stadId) {
-        this.stadId = stadId;
+    public void setLand(Land land) {
+        this.land = land;
     }
 }

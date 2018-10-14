@@ -11,19 +11,12 @@ public class Reis {
 
     @Id
     private int id;
-    @Column(name = "naam")
     private String naam;
-    @Column(name = "datumVertrek")
     private Date datumVertrek;
-    @Column(name = "datumAankomst")
     private Date datumTerug;
-    @Column(name = "prijsPerPersoon")
     private double prijsPerPersoon;
-    @Column(name = "aantalPlaatsen")
     private int aantalPlaatsen;
-    @Column(name = "vertrekLocatieId")
     private int vertrekLocatieId;
-    @Column(name = "aankomstLocatieId")
     private int aankomstLocatieId;
 
     public Reis() {
