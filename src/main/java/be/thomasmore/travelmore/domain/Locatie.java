@@ -3,7 +3,7 @@ package be.thomasmore.travelmore.domain;
 import javax.persistence.*;
 
 @Entity
-
+@Table(name = "locatie")
 public class Locatie {
 
     @Id
@@ -19,6 +19,27 @@ public class Locatie {
     public Locatie() {
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public int getStadnaam() {
+        return stadnaam;
+    }
+
+    public void setStadnaam(int stadnaam) {
+        this.stadnaam = stadnaam;
+    }
+
+    public Land getLand() {
+        return land;
+    }
+
+    public void setLand(Land land) {
+        this.land = land;
+    }
 }
