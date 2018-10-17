@@ -6,7 +6,14 @@ import javax.persistence.*;
 @DiscriminatorColumn (name = "GEBRUIKERTYPE", discriminatorType = DiscriminatorType.STRING)
 @Entity
 @Table(name = "gebruiker")
+@NamedQueries({
+        @NamedQuery(
+                name = Gebruiker.FIND_ALL,
+                query = "select g from Gebruiker g"
+        )
+})
 public class Gebruiker {
+    public static final String FIND_ALL = "Gebruiker.findAll";
 
     @Id
     private int id;

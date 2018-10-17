@@ -102,5 +102,24 @@
             #{boeking.aantalPersonen}
         </h:column>
     </h:dataTable>
+
+    <h:dataTable value="#{landController.gebruikers}" var="gebruiker">
+        <h:column>
+            <f:facet name="header">Id</f:facet>
+            #{gebruiker.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Naam</f:facet>
+            #{gebruiker.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header"></f:facet>
+            #{gebruiker.wachtwoord}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Gebruikertype</f:facet>
+            #{gebruiker.getClass().getSimpleName()}
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>
