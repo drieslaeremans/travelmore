@@ -4,7 +4,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "boeking")
+@NamedQueries({
+        @NamedQuery(
+                name = Boeking.FIND_ALL,
+                query = "SELECT b from Boeking b"
+        )
+})
 public class Boeking {
+
+    public static final String FIND_ALL = "Boeking.findAll";
 
     @Id
     private int id;

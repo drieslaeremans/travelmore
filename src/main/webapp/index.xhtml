@@ -25,5 +25,82 @@
             </ul>
         </h:column>
     </h:dataTable>
+
+    <hr></hr>
+
+    <h:dataTable var="locatie" value="#{landController.locaties}" id="locatiesDataTable">
+        <h:column>
+            <f:facet name="header">Id</f:facet>
+            #{locatie.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Stad</f:facet>
+            #{locatie.stadnaam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Land</f:facet>
+            #{locatie.land.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Vertrekkende reizen</f:facet>
+            <ul>
+                <ui:repeat value="#{locatie.vertrekkendeReizen}" var="reis">
+                    <li>#{reis.naam}</li>
+                </ui:repeat>
+            </ul>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Aankomende reizen</f:facet>
+            <ul>
+                <ui:repeat value="#{locatie.aankomendeReizen}" var="reis">
+                    <li>#{reis.naam}</li>
+                </ui:repeat>
+            </ul>
+        </h:column>
+    </h:dataTable>
+
+    <hr></hr>
+
+    <h:dataTable value="#{landController.reizen}" var="reis">
+        <h:column>
+            <f:facet name="header">Id</f:facet>
+            #{reis.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Naam</f:facet>
+            #{reis.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Type</f:facet>
+            #{reis.getClass().getSimpleName()}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Vertreklocatie</f:facet>
+            #{reis.vertrekLocatie.stadnaam}, #{reis.vertrekLocatie.land.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Aankomstlocatie</f:facet>
+            #{reis.aankomstLocatie.stadnaam}, #{reis.aankomstLocatie.land.naam}
+        </h:column>
+    </h:dataTable>
+
+    <h:dataTable var="boeking" value="#{landController.boekings}">
+        <h:column>
+            <f:facet name="header">Id</f:facet>
+            #{boeking.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Reis</f:facet>
+            #{boeking.reis.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Klant</f:facet>
+            #{boeking.klant.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Aantal personen</f:facet>
+            #{boeking.aantalPersonen}
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>

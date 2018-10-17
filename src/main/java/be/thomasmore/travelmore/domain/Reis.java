@@ -9,7 +9,14 @@ import java.util.List;
 @DiscriminatorColumn(name = "REISTYPE", discriminatorType = DiscriminatorType.STRING)
 @Entity
 @Table(name = "reis")
+@NamedQueries({
+        @NamedQuery(
+                name = Reis.FIND_ALL,
+                query = "SELECT r from Reis r"
+        )
+})
 public class Reis {
+    public static final String FIND_ALL = "Reis.findAll";
 
     @Id
     private int id;
@@ -27,11 +34,11 @@ public class Reis {
     private int aantalPlaatsen;
 
     @ManyToOne
-    @JoinColumn(name = "vertrekLocatieId")
+    @JoinColumn(name = "vertrekLocatieId", referencedColumnName = "id")
     private Locatie vertrekLocatie;
 
     @ManyToOne
-    @JoinColumn(name = "aankomstLocatieId")
+    @JoinColumn(name = "aankomstLocatieId", referencedColumnName = "id")
     private Locatie aankomstLocatie;
 
     @OneToMany(mappedBy = "reis")

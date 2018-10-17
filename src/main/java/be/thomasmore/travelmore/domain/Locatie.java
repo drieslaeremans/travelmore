@@ -6,7 +6,19 @@ import java.util.List;
 
 @Entity
 @Table(name = "locatie")
+@NamedQueries({
+        @NamedQuery(
+                name = Locatie.FIND_ALL,
+                query = "SELECT l from Locatie l"
+        ),
+        @NamedQuery(
+                name = Locatie.FIND_BY_STADNAAM,
+                query = "select l from Locatie l where l.stadnaam = :stadnaam"
+        )
+})
 public class Locatie {
+    public static final String FIND_ALL = "Location.findAll";
+    public static final String FIND_BY_STADNAAM = "Location.findByStadnaam";
 
     @Id
     private int id;
@@ -18,10 +30,10 @@ public class Locatie {
     @JoinColumn(name = "landId", referencedColumnName = "id")
     private Land land;
 
-    @OneToMany(mappedBy = "vertrekLocatie")
+    @OneToMany(mappedBy = "vertrekLocatie", fetch = FetchType.EAGER)
     private List<Reis> vertrekkendeReizen = new ArrayList<Reis>();
 
-    @OneToMany(mappedBy = "aankomstLocatie")
+    @OneToMany(mappedBy = "aankomstLocatie", fetch = FetchType.EAGER)
     private List<Reis> aankomendeReizen = new ArrayList<Reis>();
 
     public Locatie() {
