@@ -4,18 +4,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head><title>Travel More!</title></h:head>
+
+<h:form>
+    <p:growl id="messages"/>
+
+    <p:menubar>
+        <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
+        <f:facet name="options">
+            <p:commandButton type="button" value="Inloggen" icon="ui-icon-person" />
+            <p:commandButton type="button" value="Registreren" icon="ui-icon-circle-plus" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+
 <h:body>
-    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
-    <p:dataTable var="locatie" value="#{reisController.reizen}" id="reisDataTable">
-        <p:column headerText="Id">
-            <h:outputText value="#{reis.id}" />
+    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
+
+    <p:dataTable var="reis" value="#{reisController.reizen}" id="reisDataTable" rows="10"
+                 paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15" emptyMessage="Geen reizen gevonden"
+                 widgetgetVar="reizenTable" filteredValue="#{reisController.filtered}">
+
+
+        <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="Zoeken:"/>
+                <p:inputText id="globalFilter"
+                             onkeyup="PF('reizenTable').filter()"
+                             style="width:150px" placeholder="Zoeken"/>
+            </p:outputPanel>
+        </f:facet>
+
+        <p:column style="width:16px">
+            <p:rowToggler />
         </p:column>
 
         <p:column headerText="Naam">
             <h:outputText value="#{reis.naam}" />
         </p:column>
+
+        <p:column headerText="Vertrek datum">
+            <h:outputText value="#{reis.startDatum}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="Terugkomst datum">
+            <h:outputText value="#{reis.eindDatum}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="Type">
+            <h:outputText value="#{reis.getClass().getSimpleName()}" />
+        </p:column>
+
+        <p:rowExpansion>
+            <p:panelGrid  columns="2" columnClasses="label,value" style="width:600px">
+
+                <h:outputText value="Prijs (per persoon):" />
+                <h:outputText value="€ #{ reis.prijsPerPersoon}" />
+
+                <h:outputText value="Land, stad van vertrek:" />
+                <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+
+                <h:outputText value="Land, stad van aankomst:" />
+                <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+
+                <h:outputText value="Aantal plaatsen:" />
+                <h:outputText value="#{reis.aantalPlaatsen}" />
+
+            </p:panelGrid>
+        </p:rowExpansion>
+
     </p:dataTable>
 </h:body>
 </html>

@@ -20,4 +20,7 @@ public class ReisService {
     public List<Reis> findAllReizen() {
         return reisRepository.findAll();
     }
+
+    public List<Reis> findAllReizenByVertrekLocatie(String vertrekLocatie) { return reisRepository.findAllByVertrekLocation(vertrekLocatie);}
+
 }

@@ -13,10 +13,15 @@ import java.util.List;
         @NamedQuery(
                 name = Reis.FIND_ALL,
                 query = "SELECT r from Reis r"
+        ),
+        @NamedQuery(
+                name = Reis.FIND_ALL_BY_VERTREK_ADRES,
+                query = "SELECT r from Reis r WHERE r.naam = :naam"
         )
 })
 public class Reis {
     public static final String FIND_ALL = "Reis.findAll";
+    public static final String FIND_ALL_BY_VERTREK_ADRES = "Reis.findAllByVertrekAdres";
 
     @Id
     private int id;

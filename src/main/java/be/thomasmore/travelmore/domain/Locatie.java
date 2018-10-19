@@ -78,4 +78,6 @@ public class Locatie {
     public void setAankomendeReizen(List<Reis> aankomendeReizen) {
         this.aankomendeReizen = aankomendeReizen;
     }
+
+    public String getLandEnStadNaam() { return land.getNaam() + ", " + stadnaam; }
 }
