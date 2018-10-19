@@ -14,7 +14,7 @@ public class KlantController {
     @Inject
     private KlantService klantService;
 
-   private Klant klant = klantService.findKlantById(3);
+    private Klant klant = klantService.findKlantById(3);
 
     public Klant getKlant() {
         return klant;
