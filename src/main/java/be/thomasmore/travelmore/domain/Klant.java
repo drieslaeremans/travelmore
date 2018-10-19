@@ -7,7 +7,14 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("Klant")
+@NamedQueries({
+        @NamedQuery(
+                name = Klant.FIND_ALL,
+                query = "select k from Klant k"
+        )
+})
 public class Klant extends Gebruiker {
+    public static final String FIND_ALL = "Klant.findAll";
 
     @Column(name = "geboortedatum")
     @Temporal(TemporalType.DATE)

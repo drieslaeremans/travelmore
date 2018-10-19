@@ -57,5 +57,4 @@ public class ReisController {
         this.filteredReisList = filteredReisList;
     }
 
-
 }
