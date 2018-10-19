@@ -21,9 +21,20 @@
 
 <h:body>
     <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
-
     <h:form>
+        <div  class="centerDiv" style="width: 400px">
+            <p:panel>
+                <f:facet name="header">Gelieven je gegevens in te vullen aub</f:facet>
+                <h:panelGrid columns="2">
+                    Email:
+                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" label="Email" />
+                    Wachtwoord:
+                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" label="Wachtwoord" />
 
+                </h:panelGrid>
+                <p:commandButton value="Inloggen" action="#{gebruikerController.inloggen(gebruikersemail.value, gebruikerswachtwoord.value)}" ajax="false"/>
+            </p:panel>
+        </div>
     </h:form>
 
 </h:body>

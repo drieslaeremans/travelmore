@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head><title>Travel More!</title></h:head>
+
+<h:form>
+    <p:growl id="messages"/>
+
+    <p:menubar>
+        <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
+        <f:facet name="options">
+            <p:commandButton type="button" outcome="/inloggen.xhtml" value="Inloggen" icon="ui-icon-circle-person" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+
+<h:body>
+    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
+    <h:form>
+        <div  class="centerDiv" style="width: 400px">
+            <p:panel>
+                <f:facet name="header">Gelieven je gegevens in te vullen aub</f:facet>
+                <h:panelGrid columns="2">
+                    Naam:
+                    <h:inputText id="gebruikersnaam" binding="#{gebruikersnaam}" required="true" label="Naam" />
+                    <p:outputLabel for="popup" value="Geboortedatum:" />
+                    <p:calendar id="popup" binding="#{gebruikersdatum}" />
+                    Email:
+                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" label="Email" />
+                    Wachtwoord:
+                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" label="Wachtwoord" />
+
+                </h:panelGrid>
+                <p:commandButton value="Registreren" action="#{gebruikerController.registreren(gebruikersnaam.value, gebruikersdatum.value, gebruikersemail.value, gebruikerswachtwoord.value)}" ajax="false"/>
+            </p:panel>
+        </div>
+    </h:form>
+
+</h:body>
+</html>
