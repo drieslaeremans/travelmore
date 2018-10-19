@@ -14,10 +14,10 @@ public class KlantController {
     @Inject
     private KlantService klantService;
 
-    private Klant klant = klantService.findKlantById(3);
+    private Klant klant;
 
     public Klant getKlant() {
-        return klant;
+        return klantService.findKlantById(3);
     }
 
     public void setKlant(Klant klant) {

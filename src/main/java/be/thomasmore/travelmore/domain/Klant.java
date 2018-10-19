@@ -20,7 +20,7 @@ public class Klant extends Gebruiker {
     @Temporal(TemporalType.DATE)
     private Date geboortedatum;
 
-    @OneToMany(mappedBy = "klant")
+    @OneToMany(mappedBy = "klant", fetch = FetchType.EAGER)
     private List<Boeking> boekings = new ArrayList<Boeking>();
 
     public Klant() {
