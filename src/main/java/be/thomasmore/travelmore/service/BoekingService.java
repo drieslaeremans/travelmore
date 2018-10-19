@@ -30,8 +30,8 @@ public class BoekingService {
         boekingRepository.insert(boeking);
     }
 
-    public List<Boeking> findAllBoekingsByKlantId( int klantId) {
-        return boekingRepository.findAllByKlantId(klantId);
-    }
+//    public List<Boeking> findAllBoekingsByKlantId( int klantId) {
+//        return boekingRepository.findAllByKlantId(klantId);
+//    }
 
 }

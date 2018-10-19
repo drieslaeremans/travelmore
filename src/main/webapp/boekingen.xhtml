@@ -25,17 +25,17 @@
 </h:form>
 
 <h:body>
-    <p:dataTable var="boekingen" value="#{}">
+    <p:dataTable var="boeking" value="#{klantController.klant.boekings}">
         <p:column headerText="Reis">
-            <h:outputText value="#{}" />
+            <h:outputText value="#{boeking.reis.naam}" />
         </p:column>
 
         <p:column headerText="Aantal personen">
-            <h:outputText value="#{}" />
+            <h:outputText value="#{boeking.aantalPersonen}" />
         </p:column>
 
         <p:column headerText="Status">
-            <h:outputText value="#{}" />
+            <h:outputText value="#{boeking.betaald}" />
         </p:column>
     </p:dataTable>
 </h:body>

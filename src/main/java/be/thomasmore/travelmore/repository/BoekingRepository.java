@@ -23,9 +23,9 @@ public class BoekingRepository {
         entityManager.persist(boeking);
     }
 
-    public List<Boeking> findAllByKlantId(int klantId) {
-        Query q = entityManager.createNamedQuery(Boeking.FIND_ALL_BY_KLANTID, Boeking.class);
-        q.setParameter("klantId", klantId);
-        return q.getResultList();
-    }
+//    public List<Boeking> findAllByKlantId(int klantId) {
+//        Query q = entityManager.createNamedQuery(Boeking.FIND_ALL_BY_KLANTID, Boeking.class);
+//        q.setParameter("klantId", klantId);
+//        return q.getResultList();
+//    }
 }
