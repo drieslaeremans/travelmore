@@ -121,5 +121,16 @@
             #{gebruiker.getClass().getSimpleName()}
         </h:column>
     </h:dataTable>
+
+    <h:dataTable value="#{landController.klanten}" var="klant">
+        <h:column>
+            <f:facet name="header">Naam</f:facet>
+            #{klant.naam}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Type</f:facet>
+            #{klant.getClass().getSimpleName()}
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>

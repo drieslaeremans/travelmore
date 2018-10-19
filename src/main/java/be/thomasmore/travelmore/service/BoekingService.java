@@ -21,12 +21,17 @@ public class BoekingService {
         return boekingRepository.findAll();
     }
 
-    public void updateAantelPersonen(int id, int nieuwAantal) {
+    public void updateAantalPersonen(int id, int nieuwAantal) {
         Boeking boeking = boekingRepository.findById(id);
         boeking.setAantalPersonen(nieuwAantal);
     }
 
-    public void insertLocatie(Boeking boeking) {
+    public void insertBoeking(Boeking boeking) {
         boekingRepository.insert(boeking);
     }
+
+//    public List<Boeking> findAllBoekingsByKlantId( int klantId) {
+//        return boekingRepository.findAllByKlantId(klantId);
+//    }
+
 }

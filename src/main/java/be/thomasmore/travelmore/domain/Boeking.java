@@ -9,10 +9,15 @@ import javax.persistence.*;
                 name = Boeking.FIND_ALL,
                 query = "SELECT b from Boeking b"
         )
+//        @NamedQuery(
+//                name = Boeking.FIND_ALL_BY_KLANTID,
+//                query = "SELECT b from Boeking b where b.klantId.id = :klantId "
+//        )
 })
 public class Boeking {
 
     public static final String FIND_ALL = "Boeking.findAll";
+//    public static final String FIND_ALL_BY_KLANTID = "Boeking.findAllByKlantId";
 
     @Id
     private int id;

@@ -22,6 +22,7 @@ public class LandController {
     private BoekingService boekingService;
     @Inject
     private GebruikerService gebruikerService;
+    @Inject KlantService klantService;
 
     public List<Land> getLanden() {
         return landService.findAllLanden();
@@ -42,4 +43,6 @@ public class LandController {
     public List<Gebruiker> getGebruikers() {
         return gebruikerService.findAllGebruikers();
     }
+
+    public List<Klant> getKlanten() { return klantService.findAllKlanten(); }
 }

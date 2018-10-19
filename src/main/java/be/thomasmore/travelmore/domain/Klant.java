@@ -7,13 +7,20 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("Klant")
+@NamedQueries({
+        @NamedQuery(
+                name = Klant.FIND_ALL,
+                query = "select k from Klant k"
+        )
+})
 public class Klant extends Gebruiker {
+    public static final String FIND_ALL = "Klant.findAll";
 
     @Column(name = "geboortedatum")
     @Temporal(TemporalType.DATE)
     private Date geboortedatum;
 
-    @OneToMany(mappedBy = "klant")
+    @OneToMany(mappedBy = "klant", fetch = FetchType.EAGER)
     private List<Boeking> boekings = new ArrayList<Boeking>();
 
     public Klant() {

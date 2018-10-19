@@ -85,6 +85,9 @@
                 <h:outputText value="Aantal plaatsen:" />
                 <h:outputText value="#{reis.aantalPlaatsen}" />
 
+                <h:outputText />
+                <h:commandLink value="Boek deze reis" action="#{boekingController.boeken(reis)}"></h:commandLink>
+
             </p:panelGrid>
         </p:rowExpansion>
 
