@@ -29,4 +29,9 @@ public class BoekingService {
     public void insertLocatie(Boeking boeking) {
         boekingRepository.insert(boeking);
     }
+
+    public List<Boeking> findAllBoekingsByKlantId( int klantId) {
+        return boekingRepository.findAllByKlantId(klantId);
+    }
+
 }

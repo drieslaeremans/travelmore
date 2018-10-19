@@ -4,6 +4,7 @@ import be.thomasmore.travelmore.domain.Boeking;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 public class BoekingRepository {
@@ -20,5 +21,11 @@ public class BoekingRepository {
 
     public void insert(Boeking boeking) {
         entityManager.persist(boeking);
+    }
+
+    public List<Boeking> findAllByKlantId(int klantId) {
+        Query q = entityManager.createNamedQuery(Boeking.FIND_ALL_BY_KLANTID, Boeking.class);
+        q.setParameter("klantId", klantId);
+        return q.getResultList();
     }
 }
