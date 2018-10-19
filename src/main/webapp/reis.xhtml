@@ -23,6 +23,7 @@
 <h:body>
     <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
 
+    <h:form>
     <p:dataTable var="reis" value="#{reisController.reizen}" id="reisDataTable" rows="10"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -59,7 +60,13 @@
             </h:outputText>
         </p:column>
 
-        <p:column headerText="Type">
+        <p:column filterBy="#{reis.getClass().getSimpleName()}" headerText="Type">
+            <f:facet name="filter">
+                <p:selectOneButton onchange="PF('reizenTable').filter()">
+                    <f:selectItem itemLabel="Bus" itemValue="Busreis" />
+                    <f:selectItem itemLabel="Vliegtuig" itemValue="Vliegreis" />
+                </p:selectOneButton>
+            </f:facet>
             <h:outputText value="#{reis.getClass().getSimpleName()}" />
         </p:column>
 
@@ -82,5 +89,7 @@
         </p:rowExpansion>
 
     </p:dataTable>
+    </h:form>
+
 </h:body>
 </html>
