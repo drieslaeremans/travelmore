@@ -19,47 +19,8 @@ import java.util.Date;
 public class GebruikerController {
 
     @Inject
-    private LandService landService;
-    @Inject
-    private LocatieService locatieService;
-    @Inject
-    private ReisService reisService;
-    @Inject
-    private BoekingService boekingService;
-    @Inject
     private GebruikerService gebruikerService;
 
-    public LandService getLandService() {
-        return landService;
-    }
-
-    public void setLandService(LandService landService) {
-        this.landService = landService;
-    }
-
-    public LocatieService getLocatieService() {
-        return locatieService;
-    }
-
-    public void setLocatieService(LocatieService locatieService) {
-        this.locatieService = locatieService;
-    }
-
-    public ReisService getReisService() {
-        return reisService;
-    }
-
-    public void setReisService(ReisService reisService) {
-        this.reisService = reisService;
-    }
-
-    public BoekingService getBoekingService() {
-        return boekingService;
-    }
-
-    public void setBoekingService(BoekingService boekingService) {
-        this.boekingService = boekingService;
-    }
 
     public GebruikerService getGebruikerService() {
         return gebruikerService;
@@ -72,24 +33,26 @@ public class GebruikerController {
     public String inloggen(String email, String wachtwoord) {
 
         Gebruiker gebruiker = new Gebruiker();
-        gebruiker = this.gebruikerService.validate(email, wachtwoord);
+        gebruiker = gebruikerService.validate(email, wachtwoord);
 
-        if(gebruiker.getEmail() == email && gebruiker.getWachtwoord() == wachtwoord){
+        if(gebruiker != null){
 
             HttpSession session = SessionUtils.getSession();
-            session.setAttribute("gebruikersemail", gebruiker.getEmail());
+
+            session.setAttribute("id", gebruiker.getId());
+            session.setAttribute("naam", gebruiker.getNaam());
+            session.setAttribute("email", gebruiker.getEmail());
+
             return "reis";
         }
 
 
-        return "login_fout";
+        return "inloggen";
     }
 
     public String registreren(String naam, String geboorteDatum, String email, String wachtwoord) {
-        Gebruiker gebruiker = new Gebruiker();
+        Gebruiker gebruiker = new Klant();
         Date date = new Date();
-
-        Klant klant = new Klant();
 
         DateFormat format = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
         try {
@@ -98,12 +61,12 @@ public class GebruikerController {
             e.printStackTrace();
         }
 
-        klant.setNaam(naam);
-        klant.setGeboortedatum(date);
-        klant.setEmail(email);
-        klant.setWachtwoord(wachtwoord);
+        gebruiker.setNaam(naam);
+        ((Klant) gebruiker).setGeboortedatum(date);
+        gebruiker.setEmail(email);
+        gebruiker.setWachtwoord(wachtwoord);
 
-        this.gebruikerService.insertGebruiker(klant);
+        gebruikerService.insertGebruiker(gebruiker);
 
         return "login";
 

@@ -14,8 +14,11 @@
     <p:menubar>
         <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
         <f:facet name="options">
-            <p:commandButton type="button" outcome="inloggen.xhtml"  value="Inloggen" icon="ui-icon-person" />
-            <p:commandButton type="button" outcome="registreren.xhtml" value="Registreren" icon="ui-icon-circle-plus" />
+            <h:outputText rendered="#{not empty naam}" value="Hallo #{naam} " />
+            <h:panelGroup rendered="#{empty naam}">
+                <p:button type="button" value="Inloggen" outcome="inloggen.xhtml" icon="ui-icon-person" />
+                <p:button type="button" value="Registreren" outcome="registreren.xhtml" icon="ui-icon-circle-plus" />
+            </h:panelGroup>
         </f:facet>
     </p:menubar>
 </h:form>
@@ -24,74 +27,75 @@
     <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
 
     <h:form>
-    <p:dataTable var="reis" value="#{reisController.reizen}" id="reisDataTable" rows="10"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,10,15" emptyMessage="Geen reizen gevonden"
-                 widgetgetVar="reizenTable" filteredValue="#{reisController.filteredReisList}">
+        <p:dataTable var="reis" value="#{reisController.reizen}" id="reisDataTable" rows="10"
+                     paginator="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15" emptyMessage="Geen reizen gevonden"
+                     widgetgetVar="reizenTable" filteredValue="#{reisController.filteredReisList}">
 
 
-        <f:facet name="header">
-            <p:outputPanel>
-                <h:outputText value="Zoeken:"/>
-                <p:inputText id="globalFilter"
-                             onkeyup="PF('reizenTable').filter()"
-                             style="width:150px" placeholder="Zoeken"/>
-            </p:outputPanel>
-        </f:facet>
-
-        <p:column style="width:16px">
-            <p:rowToggler />
-        </p:column>
-
-        <p:column headerText="Naam">
-            <h:outputText value="#{reis.naam}" />
-        </p:column>
-
-        <p:column headerText="Vertrek datum">
-            <h:outputText value="#{reis.startDatum}">
-                <f:convertDateTime pattern="dd/MM/yyyy" />
-            </h:outputText>
-        </p:column>
-
-        <p:column headerText="Terugkomst datum">
-            <h:outputText value="#{reis.eindDatum}">
-                <f:convertDateTime pattern="dd/MM/yyyy" />
-            </h:outputText>
-        </p:column>
-
-        <p:column filterBy="#{reis.getClass().getSimpleName()}" headerText="Type">
-            <f:facet name="filter">
-                <p:selectOneButton onchange="PF('reizenTable').filter()">
-                    <f:selectItem itemLabel="Bus" itemValue="Busreis" />
-                    <f:selectItem itemLabel="Vliegtuig" itemValue="Vliegreis" />
-                </p:selectOneButton>
+            <f:facet name="header">
+                <p:outputPanel>
+                    <h:outputText value="Zoeken:"/>
+                    <p:inputText id="globalFilter"
+                                 onkeyup="PF('reizenTable').filter()"
+                                 style="width:150px" placeholder="Zoeken"/>
+                </p:outputPanel>
             </f:facet>
-            <h:outputText value="#{reis.getClass().getSimpleName()}" />
-        </p:column>
 
-        <p:rowExpansion>
-            <p:panelGrid  columns="2" columnClasses="label,value" style="width:600px">
+            <p:column style="width:16px">
+                <p:rowToggler />
+            </p:column>
 
-                <h:outputText value="Prijs (per persoon):" />
-                <h:outputText value="€ #{ reis.prijsPerPersoon}" />
+            <p:column headerText="Naam">
+                <h:outputText value="#{reis.naam}" />
+            </p:column>
 
-                <h:outputText value="Land, stad van vertrek:" />
-                <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+            <p:column headerText="Vertrek datum">
+                <h:outputText value="#{reis.startDatum}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
 
-                <h:outputText value="Land, stad van aankomst:" />
-                <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+            <p:column headerText="Terugkomst datum">
+                <h:outputText value="#{reis.eindDatum}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
 
-                <h:outputText value="Aantal plaatsen:" />
-                <h:outputText value="#{reis.aantalPlaatsen}" />
+            <p:column filterBy="#{reis.getClass().getSimpleName()}" headerText="Type">
+                <f:facet name="filter">
+                    <p:selectOneButton onchange="PF('reizenTable').filter()">
+                        <f:selectItem itemLabel="Bus" itemValue="Busreis" />
+                        <f:selectItem itemLabel="Vliegtuig" itemValue="Vliegreis" />
+                    </p:selectOneButton>
+                </f:facet>
+                <h:outputText value="#{reis.getClass().getSimpleName()}" />
+            </p:column>
 
-                <h:outputText />
-                <h:commandLink value="Boek deze reis" action="#{boekingController.boeken(reis)}"></h:commandLink>
+            <p:rowExpansion>
+                <p:panelGrid  columns="2" columnClasses="label,value" style="width:600px">
 
-            </p:panelGrid>
-        </p:rowExpansion>
+                    <h:outputText value="Prijs (per persoon):" />
+                    <h:outputText value="€ #{ reis.prijsPerPersoon}" />
 
-    </p:dataTable>
+                    <h:outputText value="Land, stad van vertrek:" />
+                    <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+
+                    <h:outputText value="Land, stad van aankomst:" />
+                    <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+
+                    <h:outputText value="Aantal plaatsen:" />
+                    <h:outputText value="#{reis.aantalPlaatsen}" />
+
+                    <h:outputText />
+
+                    <h:commandLink rendered="#{not empty naam}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
+
+                </p:panelGrid>
+            </p:rowExpansion>
+
+        </p:dataTable>
     </h:form>
 
 </h:body>

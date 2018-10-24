@@ -22,7 +22,8 @@ public class LandController {
     private BoekingService boekingService;
     @Inject
     private GebruikerService gebruikerService;
-    @Inject KlantService klantService;
+    @Inject
+    private KlantService klantService;
 
     public List<Land> getLanden() {
         return landService.findAllLanden();

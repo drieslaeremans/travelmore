@@ -18,7 +18,7 @@ import javax.persistence.*;
 })
 public class Gebruiker {
     public static final String FIND_ALL = "Gebruiker.findAll";
-    public static final String VALIDATE = "Gebruiker.valideer";
+    public static final String VALIDATE = "Gebruiker.validate";
 
     @Id
     private int id;
