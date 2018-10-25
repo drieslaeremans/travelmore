@@ -71,4 +71,10 @@ public class GebruikerController {
         return "login";
 
     }
+
+    public String uitloggen () {
+        HttpSession session = SessionUtils.getSession();
+        session.invalidate();
+        return "inloggen";
+    }
 }
