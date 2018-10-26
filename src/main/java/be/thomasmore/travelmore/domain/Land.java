@@ -1,6 +1,7 @@
 package be.thomasmore.travelmore.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
                 query = "select l from Land l where l.naam = :naam"
         )
 })
+@XmlRootElement(name = "land")
 public class Land {
     public static final String FIND_ALL = "Land.findAll";
     public static final String FIND_BY_NAAM = "Land.findByNaam";
