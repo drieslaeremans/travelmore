@@ -22,4 +22,9 @@ public class GebruikerRepository {
     public void insert(Gebruiker gebruiker) {
         entityManager.persist(gebruiker);
     }
+
+    public Gebruiker validate(String email, String wachtwoord) {
+        return entityManager.createNamedQuery(Gebruiker.VALIDATE, Gebruiker.class).setParameter("email", email).setParameter("wachtwoord", wachtwoord).getSingleResult();
+    }
+
 }

@@ -26,6 +26,10 @@ public class GebruikerService {
         gebruiker.setNaam(nieuweNaam);
     }
 
+    public Gebruiker validate(String email, String wachtwoord) {
+        return gebruikerRepository.validate(email, wachtwoord);
+    }
+
     public void insertGebruiker(Gebruiker gebruiker) {
         gebruikerRepository.insert(gebruiker);
     }

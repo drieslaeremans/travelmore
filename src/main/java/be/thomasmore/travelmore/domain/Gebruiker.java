@@ -10,10 +10,15 @@ import javax.persistence.*;
         @NamedQuery(
                 name = Gebruiker.FIND_ALL,
                 query = "select g from Gebruiker g"
+        ),
+        @NamedQuery(
+                name = Gebruiker.VALIDATE,
+                query = "select g from Gebruiker g where g.email = :email and g.wachtwoord = :wachtwoord"
         )
 })
 public class Gebruiker {
     public static final String FIND_ALL = "Gebruiker.findAll";
+    public static final String VALIDATE = "Gebruiker.validate";
 
     @Id
     private int id;
