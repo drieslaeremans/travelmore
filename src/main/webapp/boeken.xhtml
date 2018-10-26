@@ -6,16 +6,57 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<f:view>
-    <h:form>
-        <div class="p-grid">
-            <p:panel id="boeking" header="#{boekingController.nieuweBoeking.reis.naam}" >
-                <h:outputText value="#{boekingController.nieuweBoeking.klant.naam}"></h:outputText>
+<h:head><title>Travel More!</title></h:head>
 
-                <h:commandLink action="#{boekingController.boekingAanmaken}" value="Boeken"/>
+<h:form>
+    <p:growl id="messages"/>
+
+    <p:menubar>
+        <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
+        <f:facet name="options">
+            <p:commandButton type="button" value="Inloggen" icon="ui-icon-person" />
+            <p:commandButton type="button" value="Registreren" icon="ui-icon-circle-plus" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+
+<h:body>
+    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
+
+    <h:form>
+            <p:panel id="boeking">
+                <f:facet name="header">
+                    <h:outputText id="headerPanel" value="#{boekingController.nieuweBoeking.reis.naam} "/> - €<h:outputText id="berekendePrijs" value="#{boekingController.berekenPrijs(aantalPersonen.value)}" />
+                </f:facet>
+                <div class="p-grid">
+                    <h:panelGrid columns="4" width="100%">
+                        <p:outputLabel for="start" value="Startdatum:" />
+                        <h:outputText value="#{boekingController.nieuweBoeking.reis.startDatum}" id="start" title="Startdatum" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+
+                        <p:outputLabel for="eind" value="Einddatum:" />
+                        <h:outputText value="#{boekingController.nieuweBoeking.reis.eindDatum}" id="eind" title="Einddatum">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+
+                        <p:outputLabel for="aantal" value="Aantal personen:" />
+                        <p:inputText value="#{boekingController.nieuweBoeking.aantalPersonen}" id="aantal"
+                                       title="Aantal personen" binding="#{aantalPersonen}"
+                                       validatorMessage="Waarde moet een geheel getal zijn">
+                            <f:convertNumber integerOnly="true" />
+                            <f:ajax event="change" render="headerPanel" />
+                        </p:inputText>
+                    </h:panelGrid>
+                </div>
+
+
+                <f:facet name="footer">
+                    <h:commandLink action="#{boekingController.boekingAanmaken}" value="Boeken"/>
+                </f:facet>
             </p:panel>
-        </div>
+
     </h:form>
 
-</f:view>
+</h:body>
 </html>
