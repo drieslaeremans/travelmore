@@ -25,6 +25,8 @@
 </h:form>
 
 <h:body>
+    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
+
     <p:dataTable var="boeking" value="#{klantController.klant.boekings}">
         <p:column headerText="Reis">
             <h:outputText value="#{boeking.reis.naam}" />
@@ -35,7 +37,8 @@
         </p:column>
 
         <p:column headerText="Status">
-            <h:outputText value="#{boeking.betaald}" />
+            <h:outputText value="Betaald" rendered="#{boeking.betaald == true}"/>
+            <h:outputText value="Niet betaald" rendered="#{boeking.betaald == false}"/>
         </p:column>
     </p:dataTable>
 </h:body>
