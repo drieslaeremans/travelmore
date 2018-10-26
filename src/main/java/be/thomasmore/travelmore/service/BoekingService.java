@@ -31,7 +31,11 @@ public class BoekingService {
     }
 
 //    public List<Boeking> findAllBoekingsByKlantId( int klantId) {
-//        return boekingRepository.findAllByKlantId(klantId);
-//    }
+////        return boekingRepository.findAllByKlantId(klantId);
+////    }
 
+    public void updateStatusBetaald(int id) {
+        Boeking boeking = boekingRepository.findById(id);
+        boeking.setBetaald(true);
+    }
 }

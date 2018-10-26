@@ -23,12 +23,22 @@ public class BoekingController {
 
     private Boeking nieuweBoeking;
 
+    private Boeking boeking;
+
     public Boeking getNieuweBoeking() {
         return nieuweBoeking;
     }
 
     public void setNieuweBoeking(Boeking nieuweBoeking) {
         this.nieuweBoeking = nieuweBoeking;
+    }
+
+    public Boeking getBoeking() {
+        return boeking;
+    }
+
+    public void setBoeking(Boeking boeking) {
+        this.boeking = boeking;
     }
 
     public String boeken(Reis reis) {
@@ -52,5 +62,21 @@ public class BoekingController {
     public String toonBevestiging( ) {
 
         return "bevestiging";
+    }
+
+    public double berekenPrijsBoeking(int personen) {
+        return Math.floor(boeking.getReis().getPrijsPerPersoon() * personen);
+    }
+
+    public String detailsBoeking(Boeking boeking) {
+        this.boeking = boeking;
+        return "detailsBoeking";
+    }
+
+    public String wijzigStatusBetaald() {
+        boekingService.updateStatusBetaald(boeking.getId());
+        System.out.println("Boeking " + boeking.getReis().getNaam() + " is betaald");
+        this.toonBevestiging();
+        return "boekingen";
     }
 }
