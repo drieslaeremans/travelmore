@@ -19,14 +19,19 @@ public class SessionUtils {
     public static String getGebruikersEmail() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
-        return session.getAttribute("gebruikersemail").toString();
+        return session.getAttribute("email").toString();
     }
 
-    public static String getUserId() {
-        HttpSession session = getSession();
-        if (session != null)
-            return (String) session.getAttribute("userid");
-        else
-            return null;
+    public static String getGebruikersNaam() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        return session.getAttribute("naam").toString();
     }
+
+    public static String getGebruikersId() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        return session.getAttribute("id").toString();
+    }
+
 }
