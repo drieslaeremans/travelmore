@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Travel More!</title>
+</h:head>
+
+<h:form>
+    <p:growl id="messages"/>
+
+    <p:menubar>
+        <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar"/>
+        <f:facet name="options">
+            <h:outputText rendered="#{not empty naam}" value="Hallo #{naam} "/>
+            <h:panelGroup rendered="#{not empty naam}">
+                <p:commandButton value="Uitloggen" action="#{gebruikerController.uitloggen()}" icon="ui-icon-close"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{empty naam}">
+                <p:button type="button" value="Inloggen" outcome="inloggen.xhtml" icon="ui-icon-person"/>
+                <p:button type="button" value="Registreren" outcome="registreren.xhtml" icon="ui-icon-circle-plus"/>
+            </h:panelGroup>
+        </f:facet>
+    </p:menubar>
+</h:form>
+
+<h:body>
+    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
+
+    <h:form>
+        <p:panel id="boeking">
+            <f:facet name="header">
+                <h:outputText id="headerPanel" value="#{boekingController.boeking.reis.naam} "/>
+            </f:facet>
+            <div class="p-grid">
+                <h:panelGrid columns="4" width="100%">
+                    <p:outputLabel for="start" value="Startdatum:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.startDatum}" id="start" title="Startdatum">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <p:outputLabel for="eind" value="Einddatum:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.eindDatum}" id="eind" title="Einddatum">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <p:outputLabel for="vertrek" value="Vertrek locatie:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.vertrekLocatie.landEnStadNaam}" id="vertrek"
+                                  title="Vertrek locatie"/>
+
+                    <p:outputLabel for="aankomst" value="Aankomst locatie:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.aankomstLocatie.landEnStadNaam}" id="aankomst"
+                                  title="Aankomst locatie"/>
+
+                    <p:outputLabel for="type" value="Type reis:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.getClass().getSimpleName()}" id="type"
+                                  title="Type reis"/>
+
+                    <p:outputLabel/>
+                    <p:outputLabel/>
+
+                    <p:outputLabel for="prijs" value="Prijs per persoon:"/>
+                    <h:outputText value="#{boekingController.boeking.reis.prijsPerPersoon}" id="prijs"
+                                  title="Prijs per persoon">
+                        <f:convertNumber currencyCode="EUR" type="currency"/>
+                    </h:outputText>
+
+                    <p:outputLabel for="aantal" value="Aantal personen:"/>
+                    <h:outputText value="#{boekingController.boeking.aantalPersonen}" id="aantal"
+                                  title="Aantal personen" binding="#{aantalPersonen}"/>
+
+                    <p:outputLabel for="betaald" value="Status:"/>
+                    <h:outputText value="Betaald" rendered="#{boekingController.boeking.betaald == true}" id="betaald"/>
+                    <h:outputText value="Niet betaald" rendered="#{boekingController.boeking.betaald == false}"/>
+
+                    <h:outputLabel for="bedrag" value="Betaald bedrag:"
+                                   rendered="#{boekingController.boeking.betaald == true}"/>
+                    <h:outputLabel for="bedrag" value="Te betalen bedrag:"
+                                   rendered="#{boekingController.boeking.betaald == false}"/>
+                    <h:outputText value="#{boekingController.berekenPrijsBoeking(aantalPersonen.value)}" id="bedrag"
+                                  title="Bedrag">
+                        <f:convertNumber currencyCode="EUR" type="currency"/>
+                    </h:outputText>
+
+                </h:panelGrid>
+            </div>
+            <f:facet name="footer">
+                <div class="p-grid">
+                    <h:panelGrid columns="2" width="20%">
+                        <h:commandLink value="Terug" action="boekingen"/>
+                        <h:commandLink value="Betalen" action="#{boekingController.wijzigStatusBetaald()}"
+                                       rendered="#{boekingController.boeking.betaald == false}"/>
+                    </h:panelGrid>
+                </div>
+            </f:facet>
+        </p:panel>
+    </h:form>
+</h:body>
+
+</html>
