@@ -27,7 +27,7 @@ public class Land {
     @Column(name = "naam")
     private String naam;
 
-    @OneToMany(mappedBy = "land", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "land")
     private List<Locatie> locaties = new ArrayList<Locatie>();
 
     public Land() {

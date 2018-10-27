@@ -18,8 +18,10 @@ public class LandRestService {
 
     @GET
     @Path("/getland")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Land getLandById(@QueryParam("id") int id){ return landservice.findLandById(id);}
+    @Produces({MediaType.APPLICATION_JSON})
+    public Land getLandById(@QueryParam("id") int id) {
+      return landservice.findLandById(id);
+    }
 
     @POST
     @Path("/addland")
