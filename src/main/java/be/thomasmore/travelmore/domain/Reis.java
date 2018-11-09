@@ -1,6 +1,9 @@
 package be.thomasmore.travelmore.domain;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +40,7 @@ public class Reis {
     private double prijsPerPersoon;
     @Column(name = "aantalPlaatsen")
     private int aantalPlaatsen;
+
 
     @ManyToOne
     @JoinColumn(name = "vertrekLocatieId", referencedColumnName = "id")

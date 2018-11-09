@@ -2,11 +2,17 @@ package be.thomasmore.travelmore.controller;
 
 import be.thomasmore.travelmore.domain.*;
 import be.thomasmore.travelmore.service.*;
+import sun.swing.BakedArrayList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @ManagedBean
 @ViewScoped
@@ -22,6 +28,10 @@ public class ReisController {
     private BoekingService boekingService;
     @Inject
     private GebruikerService gebruikerService;
+    @Inject
+    private BusreisService busreisService;
+    @Inject
+    private VliegreisService vliegreisService;
 
     private List<Reis> filteredReisList;
 
@@ -45,10 +55,6 @@ public class ReisController {
         return gebruikerService.findAllGebruikers();
     }
 
-    public List<Reis> zoekOpVertrekLocatie(String vertrekLocatie) {
-        return reisService.findAllReizenByVertrekLocatie(vertrekLocatie);
-    }
-
     public List<Reis> getFilteredReisList() {
         return filteredReisList;
     }
@@ -57,4 +63,11 @@ public class ReisController {
         this.filteredReisList = filteredReisList;
     }
 
+    public Busreis getBusreis (int id) {
+        return busreisService.findBusreisById(id);
+    }
+
+    public Vliegreis getVliegreis (int id) {
+        return vliegreisService.findVliegreisById(id);
+    }
 }
