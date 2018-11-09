@@ -11,6 +11,8 @@ import be.thomasmore.travelmore.service.LandService;
 import be.thomasmore.travelmore.service.LocatieService;
 import be.thomasmore.travelmore.domain.Land;
 
+import java.util.List;
+
 @Path("/locaties")
 public class LocatieRestService {
     @Inject
@@ -36,5 +38,19 @@ public class LocatieRestService {
         }
         locatieService.insertLocatie(locatie);
         return Response.status(Response.Status.CREATED).entity(locatie).build();
+    }
+
+    @GET
+    @Path("/getlocaties")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<LocatieDto> getLocaties() {
+        return locatieService.findAllLocatiesDto();
+    }
+
+    @DELETE
+    @Path("/deletelocatie")
+    public void removeLocatieById(@QueryParam("id")int id)
+    {
+        locatieService.removeLocatie(id);
     }
 }

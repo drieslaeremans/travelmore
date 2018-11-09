@@ -66,4 +66,8 @@ public class LocatieService {
     public void insertLocatie(Locatie locatie) {
         locatieRepository.insert(locatie);
     }
+    public void removeLocatie(int id){
+        Locatie locatie = locatieRepository.findById(id);
+        locatieRepository.delete(locatie);
+    }
 }
