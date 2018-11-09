@@ -94,9 +94,9 @@
                 <div class="p-grid">
                     <h:panelGrid columns="3" width="40%">
                         <h:commandLink value="Terug" action="boekingen"/>
-                        <h:commandLink value="Betalen met bankcontact" action="#{boekingController.wijzigStatusBetaald()}"
+                        <h:commandLink value="Betalen met bankcontact" action="#{boekingController.wijzigStatusBetaaldMetPdf()}"
                                        rendered="#{boekingController.boeking.betaald == false}"/>
-                        <h:commandLink value="Betalen met PayPal" action="#{boekingController.wijzigStatusBetaald()}"
+                        <h:commandLink value="Betalen met PayPal" action="#{boekingController.wijzigStatusBetaaldMetPdf()}"
                                        rendered="#{boekingController.boeking.betaald == false}"/>
                     </h:panelGrid>
                 </div>
