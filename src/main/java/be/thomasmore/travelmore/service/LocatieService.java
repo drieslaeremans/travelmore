@@ -1,10 +1,12 @@
 package be.thomasmore.travelmore.service;
 
 import be.thomasmore.travelmore.domain.Locatie;
+import be.thomasmore.travelmore.dto.LocatieDto;
 import be.thomasmore.travelmore.repository.LocatieRepository;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -17,8 +19,29 @@ public class LocatieService {
         return locatieRepository.findById(id);
     }
 
+    public LocatieDto findLocatieDtoById(int id) {
+        Locatie locatie = locatieRepository.findById(id);
+        LocatieDto dto = new LocatieDto();
+        dto.setId(locatie.getId());
+        dto.setLandNaam(locatie.getLand().getNaam());
+        dto.setStadnaam(locatie.getStadnaam());
+        return dto;
+    }
+
     public List<Locatie> findAllLocaties() {
         return locatieRepository.findAll();
+    }
+
+    public List<LocatieDto> findAllLocatiesDto() {
+        List<LocatieDto> dtos = new ArrayList<>();
+        for (Locatie locatie : locatieRepository.findAll()) {
+            LocatieDto dto = new LocatieDto();
+            dto.setId(locatie.getId());
+            dto.setLandNaam(locatie.getLand().getNaam());
+            dto.setStadnaam(locatie.getStadnaam());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     public List<Locatie> findAllLocatiesMetRelaties() {

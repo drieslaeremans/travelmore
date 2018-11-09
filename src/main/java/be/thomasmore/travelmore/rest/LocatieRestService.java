@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import be.thomasmore.travelmore.domain.Locatie;
+import be.thomasmore.travelmore.dto.LocatieDto;
 import be.thomasmore.travelmore.service.LandService;
 import be.thomasmore.travelmore.service.LocatieService;
 import be.thomasmore.travelmore.domain.Land;
@@ -18,8 +19,8 @@ public class LocatieRestService {
     @GET
     @Path("/getlocatie")
     @Produces({MediaType.APPLICATION_JSON})
-    public Locatie getLocatieById(@QueryParam("id") int id) {
-        return locatieService.findLocatieById(id);
+    public LocatieDto getLocatieById(@QueryParam("id") int id) {
+        return locatieService.findLocatieDtoById(id);
     }
 
     @POST

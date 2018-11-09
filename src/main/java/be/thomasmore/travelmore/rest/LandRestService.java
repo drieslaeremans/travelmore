@@ -3,6 +3,7 @@ package be.thomasmore.travelmore.rest;
 
 import be.thomasmore.travelmore.domain.Land;
 
+import be.thomasmore.travelmore.dto.LandDto;
 import be.thomasmore.travelmore.service.LandService;
 
 import javax.inject.Inject;
@@ -19,8 +20,8 @@ public class LandRestService {
     @GET
     @Path("/getland")
     @Produces({MediaType.APPLICATION_JSON})
-    public Land getLandById(@QueryParam("id") int id) {
-      return landservice.findLandById(id);
+    public LandDto getLandById(@QueryParam("id") int id) {
+      return landservice.findLandDtoById(id);
     }
 
     @POST
