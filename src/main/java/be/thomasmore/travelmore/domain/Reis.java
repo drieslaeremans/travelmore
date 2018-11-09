@@ -38,15 +38,15 @@ public class Reis {
     @Column(name = "aantalPlaatsen")
     private int aantalPlaatsen;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "vertrekLocatieId", referencedColumnName = "id")
     private Locatie vertrekLocatie;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "aankomstLocatieId", referencedColumnName = "id")
     private Locatie aankomstLocatie;
 
-    @OneToMany(mappedBy = "reis")
+    @OneToMany(mappedBy = "reis", fetch = FetchType.LAZY)
     private List<Boeking> boekings = new ArrayList<Boeking>();
 
     public Reis() {

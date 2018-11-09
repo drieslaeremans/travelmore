@@ -21,6 +21,15 @@ public class LandService {
         return landRepository.findAll();
     }
 
+    public List<Land> findAllLandenMetRelaties() {
+        List<Land> landen = landRepository.findAll();
+        for (Land l : landen) {
+            l.getLocaties().size();
+        }
+
+        return landen;
+    }
+
     public Land findLandByNaam(String naam) {
         return landRepository.findByNaam(naam);
     }
