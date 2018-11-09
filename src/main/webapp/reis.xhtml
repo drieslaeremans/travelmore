@@ -34,16 +34,10 @@
                      paginator="true"
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      rowsPerPageTemplate="5,10,15" emptyMessage="Geen reizen gevonden"
-                     widgetgetVar="reizenTable" filteredValue="#{reisController.filteredReisList}">
-
+                     widgetVar="reizenTable" filteredValue="#{reisController.filteredReisList}">
 
             <f:facet name="header">
-                <p:outputPanel>
-                    <h:outputText value="Zoeken:"/>
-                    <p:inputText id="globalFilter"
-                                 onkeyup="PF('reizenTable').filter()"
-                                 style="width:150px" placeholder="Zoeken"/>
-                </p:outputPanel>
+                <h:outputText value="Onze reizen" />
             </f:facet>
 
             <p:column style="width:16px">
@@ -54,17 +48,38 @@
                 <h:outputText value="#{reis.naam}" />
             </p:column>
 
-            <p:column headerText="Vertrek datum">
+            <p:column headerText="Vertrek datum" filterBy="#{reis.startDatum}" filterMatchMode="exact">
                 <h:outputText value="#{reis.startDatum}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Terugkomst datum">
+            <p:column headerText="Terugkomst datum" filterBy="#{reis.eindDatum}">
                 <h:outputText value="#{reis.eindDatum}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
                 </h:outputText>
             </p:column>
+
+            <p:column headerText="Vertrek locatie" filterBy="#{reis.vertrekLocatie.landEnStadNaam}" filterMatchMode="contains">
+                <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}">
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Aankomst Locatie" filterBy="#{reis.aankomstLocatie.landEnStadNaam}" filterMatchMode="contains">
+                <h:outputText value="#{reis.aankomstLocatie.landEnStadNaam}">
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Prijs (per persoon)" filterBy="#{reis.prijsPerPersoon}">
+                <h:outputText value="€ #{reis.prijsPerPersoon}">
+                    <f:converter converterId="javax.faces.Integer" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Aantal plaatsen" filterBy="#{reis.aantalPlaatsen}">
+                <h:outputText value="#{reis.aantalPlaatsen}">
+                    <f:converter converterId="javax.faces.Integer" />
+                </h:outputText>
+            </p:column>
+
 
             <p:column filterBy="#{reis.getClass().getSimpleName()}" headerText="Type">
                 <f:facet name="filter">
@@ -77,21 +92,32 @@
             </p:column>
 
             <p:rowExpansion>
-                <p:panelGrid  columns="2" columnClasses="label,value" style="width:600px">
+                <p:panelGrid rendered="#{not empty reisController.getBusreis(reis.id)}" columns="2" columnClasses="label,value" style="width:600px">
 
-                    <h:outputText value="Prijs (per persoon):" />
-                    <h:outputText value="€ #{ reis.prijsPerPersoon}" />
+                    <h:outputText value="Vertrek adres:" />
+                    <h:outputText value="#{reisController.getBusreis(reis.id).vertrekAdres}" />
 
-                    <h:outputText value="Land, stad van vertrek:" />
-                    <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+                    <h:outputText value="Aankomst adres:" />
+                    <h:outputText value="#{reisController.getBusreis(reis.id).aankomstAdres}" />
 
-                    <h:outputText value="Land, stad van aankomst:" />
-                    <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}" />
+                    <h:outputText value="Aantal kilometer:" />
+                    <h:outputText value="#{reisController.getBusreis(reis.id).aantalKilometer} km" />
 
-                    <h:outputText value="Aantal plaatsen:" />
-                    <h:outputText value="#{reis.aantalPlaatsen}" />
+                    <h:outputText rendered="#{not empty naam}" />
 
-                    <h:outputText />
+                    <h:commandLink rendered="#{not empty naam}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
+
+                </p:panelGrid>
+
+                <p:panelGrid rendered="#{not empty reisController.getVliegreis(reis.id)}" columns="2" columnClasses="label,value" style="width:600px">
+
+                    <h:outputText value="Vertrek luchthaven:" />
+                    <h:outputText value="#{reisController.getVliegreis(reis.id).vertrekLuchthaven}" />
+
+                    <h:outputText value="Aankomst luchthaven:" />
+                    <h:outputText value="#{reisController.getVliegreis(reis.id).aankomstLuchthaven}" />
+
+                    <h:outputText rendered="#{not empty naam}" />
 
                     <h:commandLink rendered="#{not empty naam}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
 

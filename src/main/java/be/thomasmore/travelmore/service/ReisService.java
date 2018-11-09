@@ -1,5 +1,6 @@
 package be.thomasmore.travelmore.service;
 
+import be.thomasmore.travelmore.domain.Busreis;
 import be.thomasmore.travelmore.domain.Reis;
 import be.thomasmore.travelmore.repository.ReisRepository;
 

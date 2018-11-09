@@ -7,8 +7,11 @@ import be.thomasmore.travelmore.service.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,9 +75,10 @@ public class GebruikerController {
 
     }
 
-    public String uitloggen () {
+    public void uitloggen () throws IOException {
         HttpSession session = SessionUtils.getSession();
         session.invalidate();
-        return "inloggen";
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/reis.xhtml");
     }
 }
