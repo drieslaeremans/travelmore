@@ -21,6 +21,16 @@ public class LocatieService {
         return locatieRepository.findAll();
     }
 
+    public List<Locatie> findAllLocatiesMetRelaties() {
+        List<Locatie> locaties = locatieRepository.findAll();
+        for (Locatie l : locaties) {
+            l.getAankomendeReizen().size();
+            l.getVertrekkendeReizen().size();
+        }
+
+        return locaties;
+    }
+
     public Locatie findLocatieByStadnaam(String stadnaam) {
         return locatieRepository.findByNaam(stadnaam);
     }
