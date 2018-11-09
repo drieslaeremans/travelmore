@@ -26,6 +26,10 @@ public class ReisController {
     private List<Reis> filteredReisList;
 
     public List<Land> getLanden() {
+        return landService.findAllLanden();
+    }
+
+    public List<Land> getLandenMetRelaties() {
         return landService.findAllLandenMetRelaties();
     }
 
@@ -35,6 +39,10 @@ public class ReisController {
 
     public List<Reis> getReizen() {
         return reisService.findAllReizen();
+    }
+
+    public List<Reis> getReizenMetRelaties() {
+        return reisService.findAllReizenMetRelaties();
     }
 
     public List<Boeking> getBoekings() {
