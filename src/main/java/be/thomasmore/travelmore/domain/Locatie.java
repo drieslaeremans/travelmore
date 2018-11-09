@@ -30,10 +30,10 @@ public class Locatie {
     @JoinColumn(name = "landId", referencedColumnName = "id")
     private Land land;
 
-    @OneToMany(mappedBy = "vertrekLocatie", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vertrekLocatie")
     private List<Reis> vertrekkendeReizen = new ArrayList<Reis>();
 
-    @OneToMany(mappedBy = "aankomstLocatie", fetch = FetchType.EAGER)
+    @OneToMany(fetch =  FetchType.LAZY, mappedBy = "aankomstLocatie")
     private List<Reis> aankomendeReizen = new ArrayList<Reis>();
 
     public Locatie() {

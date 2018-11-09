@@ -131,6 +131,14 @@
             <f:facet name="header">Type</f:facet>
             #{klant.getClass().getSimpleName()}
         </h:column>
+        <h:column >
+            <f:facet name="header">Boekings</f:facet>
+            <ul>
+                <ui:repeat value="#{klant.boekings}" var="boeking">
+                    <li>#{boeking.reis.naam} - #{boeking.reis.aankomstLocatie.stadnaam}</li>
+                </ui:repeat>
+            </ul>
+        </h:column>
     </h:dataTable>
 </h:body>
 </html>

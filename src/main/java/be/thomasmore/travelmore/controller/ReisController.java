@@ -39,12 +39,20 @@ public class ReisController {
         return landService.findAllLanden();
     }
 
+    public List<Land> getLandenMetRelaties() {
+        return landService.findAllLandenMetRelaties();
+    }
+
     public List<Locatie> getLocaties() {
-        return locatieService.findAllLocaties();
+        return locatieService.findAllLocatiesMetRelaties();
     }
 
     public List<Reis> getReizen() {
         return reisService.findAllReizen();
+    }
+
+    public List<Reis> getReizenMetRelaties() {
+        return reisService.findAllReizenMetRelaties();
     }
 
     public List<Boeking> getBoekings() {
