@@ -34,4 +34,10 @@ public class SessionUtils {
         return session.getAttribute("id").toString();
     }
 
+    public static String getGebruikersType() {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
+        return session.getAttribute("type").toString();
+    }
+
 }

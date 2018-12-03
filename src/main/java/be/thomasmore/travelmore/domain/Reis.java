@@ -41,12 +41,7 @@ public class Reis {
     @Column(name = "aantalPlaatsen")
     private int aantalPlaatsen;
 
-<<<<<<< HEAD
-
-    @ManyToOne
-=======
     @ManyToOne()
->>>>>>> 7699cc2240c129212152197aa93b923f3ded0a6e
     @JoinColumn(name = "vertrekLocatieId", referencedColumnName = "id")
     private Locatie vertrekLocatie;
 

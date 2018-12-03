@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:outputStylesheet library="css" name="style.css"  />
 <h:head><title>Travel More!</title></h:head>
 
 <h:form>
@@ -16,6 +17,7 @@
         <f:facet name="options">
             <h:outputText rendered="#{not empty naam}" value="Hallo #{naam} " />
             <h:panelGroup rendered="#{not empty naam}">
+                <p:button rendered="#{type != 'Administrator'}" type="button" value="Boekingen" outcome="boekingen.xhtml" icon="ui-icon-calendar" />
                 <p:commandButton value="Uitloggen" action="#{gebruikerController.uitloggen()}" icon="ui-icon-close" />
             </h:panelGroup>
             <h:panelGroup rendered="#{empty naam}">
@@ -27,8 +29,9 @@
 </h:form>
 
 <h:body>
-    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
-
+    <div class="centerImg">
+        <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
+    </div>
     <h:form>
         <p:dataTable var="reis" value="#{reisController.reizen}" id="reisDataTable" rows="10"
                      paginator="true"
@@ -37,7 +40,7 @@
                      widgetVar="reizenTable" filteredValue="#{reisController.filteredReisList}">
 
             <f:facet name="header">
-                <h:outputText value="Onze reizen" />
+                <h:outputText value="De reizen" />
             </f:facet>
 
             <p:column style="width:16px">
@@ -48,33 +51,55 @@
                 <h:outputText value="#{reis.naam}" />
             </p:column>
 
-            <p:column headerText="Vertrek datum" filterBy="#{reis.startDatum}" filterMatchMode="exact">
+            <p:column headerText="Vertrek datum" filterBy="#{reis.startDatum}" filterFunction="#{reisController.filterByDate}">
+                <f:facet name="filter" class="custom-filter">
+                    <p:calendar  pattern="dd/MM/yyyy" onblur="PF('reizenTable').filter()" class="custom-filter">
+                        <p:ajax event="dateSelect"  oncomplete="PF('reizenTable').filter()"/>
+                    </p:calendar>
+                </f:facet>
                 <h:outputText value="#{reis.startDatum}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Terugkomst datum" filterBy="#{reis.eindDatum}">
+            <p:column headerText="Terugkomst datum" filterBy="#{reis.eindDatum}" filterFunction="#{reisController.filterByDate}">
+                <f:facet name="filter">
+                    <p:calendar  pattern="dd/MM/yyyy" onblur="PF('reizenTable').filter()" class="custom-filter">
+                        <p:ajax event="dateSelect"  oncomplete="PF('reizenTable').filter()"/>
+                    </p:calendar>
+                </f:facet>
                 <h:outputText value="#{reis.eindDatum}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Vertrek locatie" filterBy="#{reis.vertrekLocatie.landEnStadNaam}" filterMatchMode="contains">
+            <p:column headerText="Vertrek locatie" filterBy="#{reis.vertrekLocatie.landEnStadNaam}" filterMatchMode="in">
+                <f:facet name="filter">
+                    <p:selectCheckboxMenu label="Locaties" onchange="PF('reizenTable').filter()" scrollHeight="150">
+                        <f:selectItems value="#{landController.landEnStadLocaties}" />
+                    </p:selectCheckboxMenu>
+                </f:facet>
                 <h:outputText value="#{reis.vertrekLocatie.landEnStadNaam}">
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Aankomst Locatie" filterBy="#{reis.aankomstLocatie.landEnStadNaam}" filterMatchMode="contains">
+            <p:column headerText="Aankomst Locatie" filterBy="#{reis.aankomstLocatie.landEnStadNaam}" filterMatchMode="in">
+                <f:facet name="filter">
+                    <p:selectCheckboxMenu label="Locaties" onchange="PF('reizenTable').filter()" scrollHeight="150">
+                        <f:selectItems value="#{landController.landEnStadLocaties}" />
+                    </p:selectCheckboxMenu>
+                </f:facet>
                 <h:outputText value="#{reis.aankomstLocatie.landEnStadNaam}">
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Prijs (per persoon)" filterBy="#{reis.prijsPerPersoon}">
+            <p:column headerText="Prijs (pp.)" filterBy="#{reis.prijsPerPersoon}" footerText="Max" filterFunction="#{reisController.filterByGreater}">
                 <h:outputText value="€ #{reis.prijsPerPersoon}">
                     <f:converter converterId="javax.faces.Integer" />
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="Aantal plaatsen" filterBy="#{reis.aantalPlaatsen}">
+            <p:column headerText="Aantal plaatsen" filterBy="#{reis.aantalPlaatsen}" footerText="Min" filterFunction="#{reisController.filterByLesser}">
                 <h:outputText value="#{reis.aantalPlaatsen}">
                     <f:converter converterId="javax.faces.Integer" />
                 </h:outputText>

@@ -33,6 +33,10 @@ public class LandController {
         return locatieService.findAllLocatiesMetRelaties();
     }
 
+    public List<String> getLandEnStadLocaties() {
+        return locatieService.findAllLocatiesLandEnStadNaam();
+    }
+
     public List<Reis> getReizen() {
         return reisService.findAllReizenMetRelaties();
     }

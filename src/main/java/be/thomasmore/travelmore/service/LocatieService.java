@@ -54,6 +54,16 @@ public class LocatieService {
         return locaties;
     }
 
+    public List<String> findAllLocatiesLandEnStadNaam() {
+        List<Locatie> locaties = locatieRepository.findAll();
+        List<String> locatiesLandEnStadNaam = new ArrayList<>();
+        for (Locatie l : locaties) {
+            locatiesLandEnStadNaam.add(l.getLandEnStadNaam());
+        }
+
+        return locatiesLandEnStadNaam;
+    }
+
     public Locatie findLocatieByStadnaam(String stadnaam) {
         return locatieRepository.findByNaam(stadnaam);
     }

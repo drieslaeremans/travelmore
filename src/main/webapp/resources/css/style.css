@@ -1,0 +1,27 @@
+.centerDiv
+{
+    margin: 0 auto;
+    width: 400px;
+}
+
+.centerImg
+{
+    text-align: center;
+}
+
+img
+{
+    max-width: 100%;
+    height: auto;
+}
+
+.year-spinner input
+{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.custom-filter input
+{
+    width: 90% !important;
+}

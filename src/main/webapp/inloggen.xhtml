@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:outputStylesheet library="css" name="style.css"  />
 <h:head><title>Travel More!</title></h:head>
 
 <h:form>
@@ -20,9 +21,11 @@
 </h:form>
 
 <h:body>
-    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo" />
+    <div class="centerImg">
+        <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
+    </div>
     <h:form>
-        <div  class="centerDiv" style="width: 400px">
+        <div class="centerDiv">
             <p:panel>
                 <f:facet name="header">Gelieven je gegevens in te vullen aub</f:facet>
                 <h:panelGrid columns="2">

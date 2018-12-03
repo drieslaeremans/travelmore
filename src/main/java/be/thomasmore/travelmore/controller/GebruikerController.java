@@ -45,6 +45,7 @@ public class GebruikerController {
             session.setAttribute("id", gebruiker.getId());
             session.setAttribute("naam", gebruiker.getNaam());
             session.setAttribute("email", gebruiker.getEmail());
+            session.setAttribute("type", gebruiker.getClass().getSimpleName());
 
             return "reis";
         }
