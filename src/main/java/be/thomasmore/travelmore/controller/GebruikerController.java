@@ -73,6 +73,7 @@ public class GebruikerController {
 
         gebruikerService.insertGebruiker(gebruiker);
 
+        registered();
         return "login";
 
     }
@@ -87,4 +88,8 @@ public class GebruikerController {
     public void error() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Foute login gegevens."));
     }
+
+    public void registered() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De gebruiker is geregistreerd.") );    }
 }

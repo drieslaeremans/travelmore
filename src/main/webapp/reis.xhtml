@@ -128,9 +128,8 @@
                     <h:outputText value="Aantal kilometer:" />
                     <h:outputText value="#{reisController.getBusreis(reis.id).aantalKilometer} km" />
 
-                    <h:outputText rendered="#{not empty naam}" />
-
-                    <h:commandLink rendered="#{not empty naam}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
+                    <h:outputText rendered="#{not empty naam and type != 'Administrator'}" />
+                    <h:commandLink rendered="#{not empty type and type != 'Administrator'}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
 
                 </p:panelGrid>
 
@@ -142,8 +141,7 @@
                     <h:outputText value="Aankomst luchthaven:" />
                     <h:outputText value="#{reisController.getVliegreis(reis.id).aankomstLuchthaven}" />
 
-                    <h:outputText rendered="#{not empty type}" />
-
+                    <h:outputText rendered="#{not empty type and type != 'Administrator'}" />
                     <h:commandLink rendered="#{not empty type and type != 'Administrator'}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
 
                 </p:panelGrid>
