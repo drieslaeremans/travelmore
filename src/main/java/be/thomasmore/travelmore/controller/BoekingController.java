@@ -2,12 +2,15 @@ package be.thomasmore.travelmore.controller;
 
 import be.thomasmore.travelmore.SessionUtils;
 import be.thomasmore.travelmore.domain.Boeking;
+import be.thomasmore.travelmore.domain.Gebruiker;
 import be.thomasmore.travelmore.domain.Klant;
 import be.thomasmore.travelmore.domain.Reis;
 import be.thomasmore.travelmore.service.BoekingService;
+import be.thomasmore.travelmore.service.GebruikerService;
 import be.thomasmore.travelmore.service.KlantService;
 
 
+import be.thomasmore.travelmore.service.ReisService;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -42,6 +45,10 @@ public class BoekingController {
     private BoekingService boekingService;
     @Inject
     private KlantService klantService;
+    @Inject
+    private ReisService reisService;
+    @Inject
+    GebruikerService gebruikerService;
 
     private Boeking nieuweBoeking;
 
@@ -73,7 +80,10 @@ public class BoekingController {
 
     public String boekingAanmaken() {
         boekingService.insertBoeking(nieuweBoeking);
+        nieuweBoeking.getReis().setAantalPlaatsen(nieuweBoeking.getReis().getAantalPlaatsen() - nieuweBoeking.getAantalPersonen());
+        reisService.refreshReis(nieuweBoeking.getReis());
         System.out.println("Boeking " + nieuweBoeking.getReis().getNaam() + " aangemaakt");
+        System.out.println("Aantal beschikbare plaatsen voor reis aangepast");
         boekingMessage();
         return "boekingen";
     }
@@ -85,6 +95,12 @@ public class BoekingController {
     public String toonBevestiging( ) {
 
         return "bevestiging";
+    }
+
+    public String getAangemeldeGebruikerSoort() {
+        HttpSession session = SessionUtils.getSession();
+        Gebruiker gebruiker = gebruikerService.findGebruikerById(Integer.parseInt(session.getAttribute("id").toString() ));
+        return gebruiker.getClass().getSimpleName();
     }
 
     public double berekenPrijsBoeking(int personen) {

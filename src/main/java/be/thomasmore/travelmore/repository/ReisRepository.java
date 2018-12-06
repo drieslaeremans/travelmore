@@ -22,4 +22,8 @@ public class ReisRepository {
     public List<Reis> findAllByVertrekLocation(String vertrekLocatie) {
         return entityManager.createNamedQuery(Reis.FIND_ALL_BY_VERTREK_ADRES, Reis.class).setParameter("naam", vertrekLocatie).getResultList();
     }
+
+    public void refresh(Reis reis) {
+        entityManager.refresh(reis);
+    }
 }

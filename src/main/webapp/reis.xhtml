@@ -15,7 +15,7 @@
     <p:menubar>
         <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
         <f:facet name="options">
-            <h:outputText rendered="#{not empty naam}" value="Hallo #{naam} " />
+            <h:outputText rendered="#{not empty naam}" value="Hallo #{naam}" />
             <h:panelGroup rendered="#{not empty naam}">
                 <p:button rendered="#{type != 'Administrator'}" type="button" value="Boekingen" outcome="boekingen.xhtml" icon="ui-icon-calendar" />
                 <p:commandButton value="Uitloggen" action="#{gebruikerController.uitloggen()}" icon="ui-icon-close" />
@@ -142,9 +142,9 @@
                     <h:outputText value="Aankomst luchthaven:" />
                     <h:outputText value="#{reisController.getVliegreis(reis.id).aankomstLuchthaven}" />
 
-                    <h:outputText rendered="#{not empty naam}" />
+                    <h:outputText rendered="#{not empty type}" />
 
-                    <h:commandLink rendered="#{not empty naam}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
+                    <h:commandLink rendered="#{not empty type and type != 'Administrator'}" value="Boek deze reis" action="#{boekingController.boeken(reis)}" />
 
                 </p:panelGrid>
             </p:rowExpansion>
