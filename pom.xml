@@ -23,10 +23,6 @@
             <version>3.6.1.Final</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>rocket</artifactId>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
         <dependency>
             <groupId>com.itextpdf</groupId>

@@ -10,7 +10,7 @@
 <h:head><title>Travel More!</title></h:head>
 
 <h:form>
-    <p:growl id="messages"/>
+    <p:growl id="messages" showDetail="true"/>
 
     <p:menubar>
         <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
@@ -30,10 +30,9 @@
                 <f:facet name="header">Gelieven je gegevens in te vullen aub</f:facet>
                 <h:panelGrid columns="2">
                     Email:
-                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" label="Email" />
+                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" requiredMessage="Gelieven uw email in te geven." label="Email" />
                     Wachtwoord:
-                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" label="Wachtwoord" />
-
+                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" requiredMessage="Gelieven uw wachtwoord in te geven." label="Wachtwoord" />
                 </h:panelGrid>
                 <p:commandButton value="Inloggen" action="#{gebruikerController.inloggen(gebruikersemail.value, gebruikerswachtwoord.value)}" ajax="false"/>
             </p:panel>

@@ -16,8 +16,10 @@ import com.sun.mail.smtp.SMTPTransport;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -72,7 +74,8 @@ public class BoekingController {
     public String boekingAanmaken() {
         boekingService.insertBoeking(nieuweBoeking);
         System.out.println("Boeking " + nieuweBoeking.getReis().getNaam() + " aangemaakt");
-        return this.toonBevestiging();
+        boekingMessage();
+        return "boekingen";
     }
 
     public double berekenPrijs(int personen) {
@@ -137,7 +140,6 @@ public class BoekingController {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
         return "boekingen";
     }
 
@@ -206,7 +208,7 @@ public class BoekingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        betalingMessage();
         return "boekingen";
     }
 
@@ -231,5 +233,15 @@ public class BoekingController {
         document.add(paragraph);
 
         document.close();
+    }
+
+    public void boekingMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De reis is geboekt.") );
+    }
+
+    public void betalingMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De reis is betaald.") );
     }
 }
