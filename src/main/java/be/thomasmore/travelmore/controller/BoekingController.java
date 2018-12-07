@@ -82,8 +82,6 @@ public class BoekingController {
 
     public String boekingAanmaken() {
         boekingService.insertBoeking(nieuweBoeking);
-        nieuweBoeking.getReis().setAantalPlaatsen(nieuweBoeking.getReis().getAantalPlaatsen() - nieuweBoeking.getAantalPersonen());
-        reisService.refreshReis(nieuweBoeking.getReis());
         System.out.println("Boeking " + nieuweBoeking.getReis().getNaam() + " aangemaakt");
         System.out.println("Aantal beschikbare plaatsen voor reis aangepast");
         boekingMessage();
