@@ -2,12 +2,15 @@ package be.thomasmore.travelmore.controller;
 
 import be.thomasmore.travelmore.SessionUtils;
 import be.thomasmore.travelmore.domain.Boeking;
+import be.thomasmore.travelmore.domain.Gebruiker;
 import be.thomasmore.travelmore.domain.Klant;
 import be.thomasmore.travelmore.domain.Reis;
 import be.thomasmore.travelmore.service.BoekingService;
+import be.thomasmore.travelmore.service.GebruikerService;
 import be.thomasmore.travelmore.service.KlantService;
 
 
+import be.thomasmore.travelmore.service.ReisService;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -17,8 +20,10 @@ import com.sun.mail.smtp.SMTPTransport;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -42,6 +47,10 @@ public class BoekingController {
     private BoekingService boekingService;
     @Inject
     private KlantService klantService;
+    @Inject
+    private ReisService reisService;
+    @Inject
+    GebruikerService gebruikerService;
 
     private Boeking nieuweBoeking;
 
@@ -73,8 +82,12 @@ public class BoekingController {
 
     public String boekingAanmaken() {
         boekingService.insertBoeking(nieuweBoeking);
+        nieuweBoeking.getReis().setAantalPlaatsen(nieuweBoeking.getReis().getAantalPlaatsen() - nieuweBoeking.getAantalPersonen());
+        reisService.refreshReis(nieuweBoeking.getReis());
         System.out.println("Boeking " + nieuweBoeking.getReis().getNaam() + " aangemaakt");
-        return this.toonBevestiging();
+        System.out.println("Aantal beschikbare plaatsen voor reis aangepast");
+        boekingMessage();
+        return "boekingen";
     }
 
     public double berekenPrijs(int personen) {
@@ -84,6 +97,12 @@ public class BoekingController {
     public String toonBevestiging( ) {
 
         return "bevestiging";
+    }
+
+    public String getAangemeldeGebruikerSoort() {
+        HttpSession session = SessionUtils.getSession();
+        Gebruiker gebruiker = gebruikerService.findGebruikerById(Integer.parseInt(session.getAttribute("id").toString() ));
+        return gebruiker.getClass().getSimpleName();
     }
 
     public double berekenPrijsBoeking(int personen) {
@@ -139,7 +158,6 @@ public class BoekingController {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
         return "boekingen";
     }
 
@@ -208,7 +226,7 @@ public class BoekingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        betalingMessage();
         return "boekingen";
     }
 
@@ -283,5 +301,15 @@ public class BoekingController {
         HTMLWorker htmlWorker = new HTMLWorker(document);
         htmlWorker.parse(new StringReader(html));
         document.close();
+    }
+
+    public void boekingMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De reis is geboekt.") );
+    }
+
+    public void betalingMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De reis is betaald.") );
     }
 }

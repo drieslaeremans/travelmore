@@ -5,6 +5,7 @@ import be.thomasmore.travelmore.domain.Gebruiker;
 import be.thomasmore.travelmore.domain.Klant;
 import be.thomasmore.travelmore.service.*;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -48,9 +49,9 @@ public class GebruikerController {
             session.setAttribute("type", gebruiker.getClass().getSimpleName());
 
             return "reis";
+        } else {
+            error();
         }
-
-
         return "inloggen";
     }
 
@@ -72,6 +73,7 @@ public class GebruikerController {
 
         gebruikerService.insertGebruiker(gebruiker);
 
+        registered();
         return "login";
 
     }
@@ -82,4 +84,12 @@ public class GebruikerController {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/reis.xhtml");
     }
+
+    public void error() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Foute login gegevens."));
+    }
+
+    public void registered() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Succesvol",  "De gebruiker is geregistreerd.") );    }
 }

@@ -49,5 +49,9 @@ public class ReisService {
         return reizen;
     }
 
+    public void refreshReis(Reis reis) {
+        reisRepository.refresh(reis);
+    }
+
 
 }

@@ -10,12 +10,20 @@
 <h:head><title>Travel More!</title></h:head>
 
 <h:form>
-    <p:growl id="messages"/>
+    <p:growl id="messages" showDetail="true"/>
 
     <p:menubar>
         <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar" />
         <f:facet name="options">
-            <p:button type="button" value="Registreren" outcome="/registreren.xhtml" icon="ui-icon-circle-plus" />
+            <h:outputText rendered="#{not empty naam}" value="Hallo #{naam} " />
+            <h:panelGroup rendered="#{not empty naam}">
+                <p:button rendered="#{type != 'Administrator'}" type="button" value="Boekingen" outcome="boekingen.xhtml" icon="ui-icon-calendar" />
+                <p:commandButton value="Uitloggen" action="#{gebruikerController.uitloggen()}" icon="ui-icon-close" />
+            </h:panelGroup>
+            <h:panelGroup rendered="#{empty naam}">
+                <p:button type="button" value="Inloggen" outcome="inloggen.xhtml" icon="ui-icon-person" />
+                <p:button type="button" value="Registreren" outcome="registreren.xhtml" icon="ui-icon-circle-plus" />
+            </h:panelGroup>
         </f:facet>
     </p:menubar>
 </h:form>
@@ -30,10 +38,9 @@
                 <f:facet name="header">Gelieven je gegevens in te vullen aub</f:facet>
                 <h:panelGrid columns="2">
                     Email:
-                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" label="Email" />
+                    <h:inputText id="gebruikersemail" binding="#{gebruikersemail}" required="true" requiredMessage="Gelieven uw email in te geven." label="Email" />
                     Wachtwoord:
-                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" label="Wachtwoord" />
-
+                    <h:inputSecret id="gebruikerswachtwoord" binding="#{gebruikerswachtwoord}" required="true" requiredMessage="Gelieven uw wachtwoord in te geven." label="Wachtwoord" />
                 </h:panelGrid>
                 <p:commandButton value="Inloggen" action="#{gebruikerController.inloggen(gebruikersemail.value, gebruikerswachtwoord.value)}" ajax="false"/>
             </p:panel>

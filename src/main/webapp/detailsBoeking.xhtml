@@ -13,7 +13,7 @@
 </h:head>
 
 <h:form>
-    <p:growl id="messages"/>
+    <p:growl id="growl" showDetail="true" />
 
     <p:menubar>
         <p:menuitem value="Reizen" outcome="/reis.xhtml" icon="ui-icon-calendar"/>
@@ -31,7 +31,9 @@
 </h:form>
 
 <h:body>
-    <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
+    <div class="centerImg">
+        <h:graphicImage name="/images/headerlogo.png" alt="headerlogo"/>
+    </div>
 
     <h:form>
         <p:panel id="boeking">
