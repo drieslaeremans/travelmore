@@ -230,10 +230,6 @@ public class BoekingController {
         return "boekingen";
     }
 
-    public String returnDetail() {
-        return "detailsBoeking";
-    }
-
     public void generatePdf(OutputStream outputStream) throws Exception {
         Document document = new Document();
         PdfWriter.getInstance(document, outputStream);
@@ -245,13 +241,6 @@ public class BoekingController {
         document.addKeywords("iText, email");
         document.addAuthor("Team 11");
         document.addCreator("Team 11");
-
-//        Paragraph paragraph = new Paragraph("\n\n Details:"
-//                + "\n Periode: " + boeking.getReis().getStartDatum() + " - " + boeking.getReis().getEindDatum()
-//                + "\n Locatie: " + boeking.getReis().getAankomstLocatie().getLandEnStadNaam()
-//                + "\n Aantal personen: " + boeking.getAantalPersonen()
-//                + "\n Totaal prijs: " + berekenPrijsBoeking(boeking.getAantalPersonen()));
-//        document.add(paragraph);
 
         String html = "<html>\n" +
                 "\n" +
