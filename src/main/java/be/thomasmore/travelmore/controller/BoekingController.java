@@ -11,6 +11,7 @@ import be.thomasmore.travelmore.service.KlantService;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.mail.smtp.SMTPTransport;
 
@@ -28,6 +29,7 @@ import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.security.Security;
 import java.util.Date;
 import java.util.Properties;
@@ -121,7 +123,7 @@ public class BoekingController {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(boeking.getKlant().getEmail()));
             message.setSubject("Boeking reis " + boeking.getReis().getNaam());
-            message.setText("Beste meneer/mevrouw " + boeking.getKlant().getNaam() + ","
+            message.setText("Beste " + boeking.getKlant().getNaam() + ","
                     + "\n\n Uw betaling is goed ontvangen."
                     + "\n\n Details:"
                     + "\n Periode: " + boeking.getReis().getStartDatum() + " - " + boeking.getReis().getEindDatum()
@@ -166,7 +168,7 @@ public class BoekingController {
 
         try {
             MimeBodyPart textBodyPart = new MimeBodyPart();
-            textBodyPart.setText("Beste meneer/mevrouw " + boeking.getKlant().getNaam() + ","
+            textBodyPart.setText("Beste " + boeking.getKlant().getNaam() + ","
                     + "\n\n Uw betaling is goed ontvangen."
                     + "\n\n Details:"
                     + "\n Periode: " + boeking.getReis().getStartDatum() + " - " + boeking.getReis().getEindDatum()
@@ -220,16 +222,66 @@ public class BoekingController {
 
         document.open();
 
-        document.addTitle("Test PDF");
-        document.addSubject("Testing email PDF");
+        document.addTitle("Bevestiging");
+        document.addSubject("Bevestiging boeking");
         document.addKeywords("iText, email");
-        document.addAuthor("Jee Vang");
-        document.addCreator("Jee Vang");
+        document.addAuthor("Team 11");
+        document.addCreator("Team 11");
 
-        Paragraph paragraph = new Paragraph();
-        paragraph.add(new Chunk(this.returnDetail()));
-        document.add(paragraph);
+//        Paragraph paragraph = new Paragraph("\n\n Details:"
+//                + "\n Periode: " + boeking.getReis().getStartDatum() + " - " + boeking.getReis().getEindDatum()
+//                + "\n Locatie: " + boeking.getReis().getAankomstLocatie().getLandEnStadNaam()
+//                + "\n Aantal personen: " + boeking.getAantalPersonen()
+//                + "\n Totaal prijs: " + berekenPrijsBoeking(boeking.getAantalPersonen()));
+//        document.add(paragraph);
 
+        String html = "<html>\n" +
+                "\n" +
+                "<body>\n" +
+                "    <img src=\"dev/projects/travelmore/src/main/webapp/resources/images/headerlogo.png\" width=\"500px\" />\n" +
+                "    <h2>Proficiat!</h2>\n" +
+                "    <p>Beste " + boeking.getKlant().getNaam() + "</p>\n" +
+                "    <p>Hieronder vindt u een overzicht van alle details van uw reis naar " + boeking.getReis().getNaam() + "</p>\n" +
+                "<br/>" +
+                "    <table width>\n" +
+                "        <tr>\n" +
+                "            <td><b>Startdatum:</b></td>\n" +
+                "            <td>" + boeking.getReis().getStartDatum() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Einddatum:</b></td>\n" +
+                "            <td>" + boeking.getReis().getEindDatum() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Vertrek locatie:</b></td>\n" +
+                "            <td>" + boeking.getReis().getVertrekLocatie().getLandEnStadNaam() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Aankomst locatie:</b></td>\n" +
+                "            <td>" + boeking.getReis().getAankomstLocatie().getLandEnStadNaam() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Type reis:</b></td>\n" +
+                "            <td>" + boeking.getReis().getClass().getSimpleName() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Prijs p.p.:</b></td>\n" +
+                "            <td>" + boeking.getReis().getPrijsPerPersoon() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Aantal personen:</b></td>\n" +
+                "            <td>" + boeking.getAantalPersonen() + "</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td><b>Betaald bedrag:</b></td>\n" +
+                "            <td>" + berekenPrijsBoeking(boeking.getAantalPersonen()) + "</td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>\n";
+        HTMLWorker htmlWorker = new HTMLWorker(document);
+        htmlWorker.parse(new StringReader(html));
         document.close();
     }
 }
