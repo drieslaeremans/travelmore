@@ -11,12 +11,9 @@ import be.thomasmore.travelmore.service.KlantService;
 
 
 import be.thomasmore.travelmore.service.ReisService;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.sun.mail.smtp.SMTPTransport;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -114,53 +111,6 @@ public class BoekingController {
         return "detailsBoeking";
     }
 
-    public String wijzigStatusBetaald() {
-        boekingService.updateStatusBetaald(boeking.getId());
-        System.out.println("Boeking " + boeking.getReis().getNaam() + " is betaald");
-        this.toonBevestiging();
-
-        final String username = "travelmoreG11@gmail.com";
-        final String password = "TravelmoreG.11";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(boeking.getKlant().getEmail()));
-            message.setSubject("Boeking reis " + boeking.getReis().getNaam());
-            message.setText("Beste " + boeking.getKlant().getNaam() + ","
-                    + "\n\n Uw betaling is goed ontvangen."
-                    + "\n\n Details:"
-                    + "\n Periode: " + boeking.getReis().getStartDatum() + " - " + boeking.getReis().getEindDatum()
-                    + "\n Locatie: " + boeking.getReis().getAankomstLocatie().getLandEnStadNaam()
-                    + "\n Aantal personen: " + boeking.getAantalPersonen()
-                    + "\n Totaal prijs: " + berekenPrijsBoeking(boeking.getAantalPersonen())
-                    + "\n\n Voor eventuele vragen contacteer " + username + ".");
-
-            Transport.send(message);
-
-            System.out.println("Done");
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-        return "boekingen";
-    }
-
     public String wijzigStatusBetaaldMetPdf() {
         boekingService.updateStatusBetaald(boeking.getId());
         System.out.println("Boeking " + boeking.getReis().getNaam() + " is betaald");
@@ -248,7 +198,8 @@ public class BoekingController {
                 "    <img src=\"dev/projects/travelmore/src/main/webapp/resources/images/headerlogo.png\" width=\"500px\" />\n" +
                 "    <h2>Proficiat!</h2>\n" +
                 "    <p>Beste " + boeking.getKlant().getNaam() + "</p>\n" +
-                "    <p>Hieronder vindt u een overzicht van alle details van uw reis naar " + boeking.getReis().getNaam() + "</p>\n" +
+                "<br/>" +
+                "    <p>Hieronder vindt u een overzicht van alle details van uw reis naar " + boeking.getReis().getNaam() + ".</p>\n" +
                 "<br/>" +
                 "    <table width>\n" +
                 "        <tr>\n" +
@@ -273,7 +224,7 @@ public class BoekingController {
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td><b>Prijs p.p.:</b></td>\n" +
-                "            <td>" + boeking.getReis().getPrijsPerPersoon() + "</td>\n" +
+                "            <td>€ " + boeking.getReis().getPrijsPerPersoon() + "</td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td><b>Aantal personen:</b></td>\n" +
@@ -281,7 +232,7 @@ public class BoekingController {
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td><b>Betaald bedrag:</b></td>\n" +
-                "            <td>" + berekenPrijsBoeking(boeking.getAantalPersonen()) + "</td>\n" +
+                "            <td>€ " + berekenPrijsBoeking(boeking.getAantalPersonen()) + "</td>\n" +
                 "        </tr>\n" +
                 "    </table>\n" +
                 "</body>\n" +
